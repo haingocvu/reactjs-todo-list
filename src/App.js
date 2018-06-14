@@ -8,7 +8,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: []
+            tasks: [],
+            isDisplayForm: false
         }
     }
 
@@ -58,9 +59,22 @@ class App extends Component {
         });
         localStorage.setItem("tasks", JSON.stringify(myTasks));
     }
+
+    onToggleForm = ()=>{
+        this.setState({
+            isDisplayForm: !this.state.isDisplayForm
+        })
+    }
     
+    onCloseForm = ()=>{
+        this.setState({
+            isDisplayForm: false
+        })
+    }
+
     render() {
-        let {tasks} = this.state;
+        let {tasks, isDisplayForm} = this.state;
+        let elmForm = isDisplayForm?<TaskForm onCloseForm={this.onCloseForm} />:"";
         return (
             <div className="container">
                 <div className="row">
@@ -68,14 +82,18 @@ class App extends Component {
                 </div>
                 <hr />
                 <div className="row">
-                    <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div className={isDisplayForm?"col-xs-4 col-sm-4 col-md-4 col-lg-4":""}>
                         {/* add task */}
-                        <TaskForm />
+                        {elmForm}
                     </div>
-                    <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                    <div className={isDisplayForm?"col-xs-8 col-sm-8 col-md-8 col-lg-8":"col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
                         {/* add task */}
                         <div>
-                            <button type="button" className="btn btn-primary">
+                            <button 
+                                type="button" 
+                                className="btn btn-primary"
+                                onClick={this.onToggleForm}
+                                >
                                 <i className="fas fa-plus mr-5"></i>Add Task
                             </button>
                             <button 
