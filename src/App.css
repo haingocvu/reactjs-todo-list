@@ -26,3 +26,23 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.text-right {
+    float: right;
+    cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-15 {
+    margin-top: 15px;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+.dropdown-menu li a {
+    cursor: pointer;
+}
