@@ -5,7 +5,62 @@ import TaskList from './components/TaskList';
 import './App.css';
 
 class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            tasks: []
+        }
+    }
+
+    componentWillMount() {
+        if(localStorage && localStorage.getItem("tasks")) {
+            this.setState({
+                tasks: JSON.parse(localStorage.getItem("tasks"))
+            })
+        }
+    }
+
+    randomString(length) {
+        //62
+        let src = "1234567890zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP";
+        let str = "";
+        for (let index = 0; index < length; index++) {
+            str += src.substr(Math.floor(Math.random()*src.length), 1);
+        }
+        return str;
+    }
+
+    generateData = ()=>{
+        let myTasks = [
+            {
+                id: this.randomString(10),
+                name: 'Learn Reactjs',
+                status: true
+            },
+            {
+                id: this.randomString(10),
+                name: 'Learn Nodejs',
+                status: true
+            },
+            {
+                id: this.randomString(10),
+                name: 'Learn Laravel',
+                status: true
+            },
+            {
+                id: this.randomString(10),
+                name: 'Learn Vuejs',
+                status: false
+            }
+        ];
+        this.setState({
+            tasks: myTasks
+        });
+        localStorage.setItem("tasks", JSON.stringify(myTasks));
+    }
+    
     render() {
+        let {tasks} = this.state;
         return (
             <div className="container">
                 <div className="row">
@@ -23,13 +78,20 @@ class App extends Component {
                             <button type="button" className="btn btn-primary">
                                 <i className="fas fa-plus mr-5"></i>Add Task
                             </button>
+                            <button 
+                                type="button" 
+                                className="btn btn-primary ml-5"
+                                onClick={this.generateData}
+                            >
+                                <i className="fas fa-plus mr-5"></i>Generate Data
+                            </button>
                         </div>
                         {/* search and sort */}
                         <Action />
                         {/* list */}
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <TaskList />
+                                <TaskList tasks={tasks}/>
                             </div>
                         </div>
                     </div>

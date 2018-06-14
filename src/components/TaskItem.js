@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 
 class TaskItem extends Component {
     render() {
+        let {index, task} = this.props;
         return (
             <tr>
-                <td>1</td>
+                <td>{index + 1}</td>
                 <td className="text-center">
-                    Learn Reactjs   
+                    {task.name}   
                 </td>
                 <td className="text-center">
-                    <span className="label label-success">Active</span>
+                    <span className={task.status?"label label-success":"label label-danger"}>
+                    {task.status?"Active":"Hide"}
+                    </span>
                 </td>
                 <td className="text-center">
                     <button type="button" className="btn btn-danger">

@@ -46,3 +46,7 @@
 .dropdown-menu li a {
     cursor: pointer;
 }
+
+.ml-5 {
+    margin-left: 5px;
+}
