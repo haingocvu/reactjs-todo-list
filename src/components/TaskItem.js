@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 class TaskItem extends Component {
+    onUpdateMyStatus = ()=>{
+        this.props.onUpdateItemStatus(this.props.task.id)
+    }
     render() {
         let {index, task} = this.props;
         return (
@@ -10,7 +13,10 @@ class TaskItem extends Component {
                     {task.name}   
                 </td>
                 <td className="text-center">
-                    <span className={task.status?"label label-success":"label label-danger"}>
+                    <span 
+                        className={task.status?"label label-success":"label label-danger"}
+                        onClick={this.onUpdateMyStatus}
+                    >
                     {task.status?"Active":"Hide"}
                     </span>
                 </td>

@@ -5,7 +5,12 @@ class TaskList extends Component {
     render() {
         let {tasks} = this.props;
         let ElementTasks = tasks.map((task, index)=>{
-            return <TaskItem key={task.id} index={index} task={task}/>
+            return <TaskItem 
+                        key={task.id} 
+                        index={index} 
+                        task={task} 
+                        onUpdateItemStatus={this.props.onUpdateStatus}
+                    />
         })
         return (
             <table className="table table-bordered table-hover">
