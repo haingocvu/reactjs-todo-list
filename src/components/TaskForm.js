@@ -18,15 +18,19 @@ class TaskForm extends Component {
         let ename = target.name;
         let evalue = (target.type === 'checkbox')?target.checked:target.value;
         if(ename === 'status') evalue = (evalue === 'true')?true:false;
-        this.setState({
-            [ename]: evalue
-        })
+        if(target.type === 'checkbox' || evalue.trim().length) {
+            this.setState({
+                [ename]: evalue
+            })
+        }
     }
 
     onHandleSubmit = (event)=>{
         event.preventDefault();
-        this.props.onReceivedTask(this.state);
-        this.onClear();
+        if(this.state.name.trim().length && (this.state.status === true || this.state.status === false)){
+            this.props.onReceivedTask(this.state);
+            this.onClear();
+        }
     }
 
     onClear = ()=>{

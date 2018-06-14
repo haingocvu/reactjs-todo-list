@@ -54,7 +54,6 @@ class App extends Component {
         this.setState({
             tasks: tasks
         });
-        console.log(this.state.tasks);
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
@@ -69,6 +68,20 @@ class App extends Component {
             tasks: tasks
         });
         localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    deleteTaskItem = (id)=>{
+        let tasks = this.state.tasks;
+        tasks.forEach((task, index) => {
+            if(task.id === id) {
+               return tasks.splice(index, 1);
+            }
+        });
+        this.setState({
+            tasks: tasks
+        });
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        this.onCloseForm();
     }
 
     render() {
@@ -104,7 +117,11 @@ class App extends Component {
                         {/* list */}
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <TaskList tasks={tasks} onUpdateStatus={this.updateStatus}/>
+                                <TaskList 
+                                    tasks={tasks} 
+                                    onUpdateStatus={this.updateStatus}
+                                    ondeleteTaskItem={this.deleteTaskItem}
+                                />
                             </div>
                         </div>
                     </div>
