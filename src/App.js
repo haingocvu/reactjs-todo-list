@@ -72,9 +72,27 @@ class App extends Component {
         })
     }
 
+    onReceivedTask = (data)=>{
+        let task = {
+            id: this.randomString(10),
+            name: data.name,
+            status: data.status
+        };
+        let {tasks} = this.state;
+        tasks.push(task);
+        this.setState({
+            tasks: tasks
+        });
+        console.log(this.state.tasks);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
     render() {
         let {tasks, isDisplayForm} = this.state;
-        let elmForm = isDisplayForm?<TaskForm onCloseForm={this.onCloseForm} />:"";
+        let elmForm = isDisplayForm?<TaskForm 
+                                        onCloseForm={this.onCloseForm} 
+                                        onReceivedTask={this.onReceivedTask}
+                                    />:"";
         return (
             <div className="container">
                 <div className="row">
