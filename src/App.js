@@ -58,7 +58,7 @@ class App extends Component {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
-    onUpdateStatus = (id)=>{
+    updateStatus = (id)=>{
         let {tasks} = this.state;
         tasks.forEach(task => {
             if(task.id === id) {
@@ -104,7 +104,7 @@ class App extends Component {
                         {/* list */}
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <TaskList tasks={tasks} onUpdateStatus={this.onUpdateStatus}/>
+                                <TaskList tasks={tasks} onUpdateStatus={this.updateStatus}/>
                             </div>
                         </div>
                     </div>
