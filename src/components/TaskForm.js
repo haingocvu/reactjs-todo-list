@@ -26,6 +26,14 @@ class TaskForm extends Component {
     onHandleSubmit = (event)=>{
         event.preventDefault();
         this.props.onReceivedTask(this.state);
+        this.onClear();
+    }
+
+    onClear = ()=>{
+        this.setState({
+            name: '',
+            status: false
+        })
     }
 
     render() {
@@ -68,7 +76,11 @@ class TaskForm extends Component {
                             <button type="submit" className="btn btn-success">
                                 <i className="fas fa-save mr-5"></i>Save
                             </button>&nbsp;
-                            <button type="submit" className="btn btn-danger">
+                            <button  
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={this.onClear}
+                            >
                                 <i className="fas fa-window-close mr-5"></i>Cancel
                             </button>
                         </div>

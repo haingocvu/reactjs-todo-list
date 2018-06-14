@@ -31,35 +31,6 @@ class App extends Component {
         return str;
     }
 
-    generateData = ()=>{
-        let myTasks = [
-            {
-                id: this.randomString(10),
-                name: 'Learn Reactjs',
-                status: true
-            },
-            {
-                id: this.randomString(10),
-                name: 'Learn Nodejs',
-                status: true
-            },
-            {
-                id: this.randomString(10),
-                name: 'Learn Laravel',
-                status: true
-            },
-            {
-                id: this.randomString(10),
-                name: 'Learn Vuejs',
-                status: false
-            }
-        ];
-        this.setState({
-            tasks: myTasks
-        });
-        localStorage.setItem("tasks", JSON.stringify(myTasks));
-    }
-
     onToggleForm = ()=>{
         this.setState({
             isDisplayForm: !this.state.isDisplayForm
@@ -113,13 +84,6 @@ class App extends Component {
                                 onClick={this.onToggleForm}
                                 >
                                 <i className="fas fa-plus mr-5"></i>Add Task
-                            </button>
-                            <button 
-                                type="button" 
-                                className="btn btn-primary ml-5"
-                                onClick={this.generateData}
-                            >
-                                <i className="fas fa-plus mr-5"></i>Generate Data
                             </button>
                         </div>
                         {/* search and sort */}
