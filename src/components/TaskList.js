@@ -2,6 +2,25 @@ import React, { Component } from 'react';
 import TaskItem from './TaskItem';
 
 class TaskList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        filterName: '',
+        filterStatus: -1
+        }
+    }
+    
+    handleChange = (event)=>{
+        let target = event.target;
+        let name = target.name;
+        let value = target.value;
+        this.setState({
+            [name]: value
+        }, ()=>{
+            this.props.onFilter(this.state.filterName, this.state.filterStatus)
+        })
+    }
+
     render() {
         let {tasks} = this.props;
         let ElementTasks = tasks.map((task, index)=>{
@@ -28,13 +47,24 @@ class TaskList extends Component {
                     <tr>
                         <td></td>
                         <td>
-                            <input type="text" name="" className="form-control" />    
+                            <input 
+                                type="text" 
+                                name="filterName" 
+                                className="form-control" 
+                                value={this.state.filterName}
+                                onChange={this.handleChange}
+                            />    
                         </td>
                         <td>
-                            <select name="" className="form-control">
-                                <option value="">All</option>
-                                <option value="">Active</option>
-                                <option value="">Hide</option>
+                            <select 
+                                name="filterStatus" 
+                                className="form-control"
+                                value={this.state.filterStatus}
+                                onChange={this.handleChange}
+                            >
+                                <option value={-1}>All</option>
+                                <option value={1}>Active</option>
+                                <option value={0}>Hide</option>
                             </select>
                         </td>
                         <td></td>

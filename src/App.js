@@ -10,7 +10,11 @@ class App extends Component {
         this.state = {
             tasks: [],
             isDisplayForm: false,
-            editingItem: null
+            editingItem: null,
+            filter: {
+                filterName: '',
+                filterStatus: -1
+            }
         }
     }
 
@@ -124,8 +128,30 @@ class App extends Component {
         }
     }
 
+    Filter = (filterName, filterStatus)=>{
+        this.setState({
+            filter: {
+                filterName: filterName,
+                filterStatus: filterStatus
+            }
+        })
+    }
+
     render() {
-        let {tasks, isDisplayForm} = this.state;
+        let {tasks, isDisplayForm, filter} = this.state;
+        if(filter){
+            if(filter.filterName){
+                tasks = tasks.filter((task, index)=>{
+                    return task.name.toLowerCase().indexOf(filter.filterName.toLowerCase()) !== -1
+                })
+            }
+            tasks = tasks.filter((task, index)=>{
+                //status -1 will take all
+                if(parseInt(filter.filterStatus, 10) === -1) return task;
+                let filterStatus = parseInt(filter.filterStatus, 10) === 1?true:false;
+                return task.status === filterStatus;
+            })
+        }
         let elmForm = isDisplayForm?<TaskForm 
                                         onCloseForm={this.onCloseForm} 
                                         onReceivedTask={this.onReceivedTask}
@@ -163,6 +189,7 @@ class App extends Component {
                                     onUpdateStatus={this.updateStatus}
                                     ondeleteTaskItem={this.deleteTaskItem}
                                     onEditTaskItem={this.EditTaskItem}
+                                    onFilter={this.Filter}
                                 />
                             </div>
                         </div>
