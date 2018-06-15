@@ -14,6 +14,8 @@ class Search extends Component {
         let value = target.value;
         this.setState({
             [name]: value
+        }, ()=>{
+            if(!this.state.keyword) this.props.onSearch(this.state.keyword)
         })
     }
 
