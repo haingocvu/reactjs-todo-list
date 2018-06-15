@@ -9,6 +9,10 @@ class TaskItem extends Component {
         this.props.onDeleteItem(this.props.task.id);
     }
 
+    Edit = ()=>{
+        this.props.onEdit(this.props.task.id)
+    }
+
     render() {
         let {index, task} = this.props;
         return (
@@ -33,7 +37,11 @@ class TaskItem extends Component {
                     >
                         <i className="fas fa-trash-alt mr-5"></i>Delete
                     </button>&nbsp;
-                    <button type="button" className="btn btn-warning">
+                    <button 
+                        type="button" 
+                        className="btn btn-warning"
+                        onClick={this.Edit}
+                    >
                         <i className="fas fa-edit mr-5"></i>Edit
                     </button>
                 </td>

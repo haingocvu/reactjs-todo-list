@@ -9,7 +9,8 @@ class App extends Component {
         super(props);
         this.state = {
             tasks: [],
-            isDisplayForm: false
+            isDisplayForm: false,
+            editingItem: null
         }
     }
 
@@ -32,9 +33,17 @@ class App extends Component {
     }
 
     onToggleForm = ()=>{
-        this.setState({
-            isDisplayForm: !this.state.isDisplayForm
-        })
+        //when not edit
+        if(this.state.editingItem === null) {
+            this.setState({
+                isDisplayForm: !this.state.isDisplayForm
+            })
+        }else{//when editing item
+            this.setState({
+                isDisplayForm: true,
+                editingItem: null
+            })
+        }
     }
     
     onCloseForm = ()=>{
@@ -44,17 +53,32 @@ class App extends Component {
     }
 
     onReceivedTask = (data)=>{
-        let task = {
-            id: this.randomString(10),
-            name: data.name,
-            status: data.status
-        };
-        let {tasks} = this.state;
-        tasks.push(task);
-        this.setState({
-            tasks: tasks
-        });
-        localStorage.setItem("tasks", JSON.stringify(tasks));
+        //if editing task
+        if(data.id !== ''){
+            let {tasks} = this.state;
+            tasks.forEach((task, index) => {
+                if(task.id === data.id) {
+                   return tasks[index] = data;
+                }
+            });
+            this.setState({
+                tasks: tasks,
+                editingItem: null
+            })
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }else{//when add new task
+            let task = {
+                id: this.randomString(10),
+                name: data.name,
+                status: data.status
+            };
+            let {tasks} = this.state;
+            tasks.push(task);
+            this.setState({
+                tasks: tasks
+            });
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
     }
 
     updateStatus = (id)=>{
@@ -84,11 +108,28 @@ class App extends Component {
         this.onCloseForm();
     }
 
+    EditTaskItem = id=>{
+        let {tasks} = this.state;
+        let editingTask = null;
+        tasks.forEach((task, index) => {
+            if(task.id === id) {
+                return editingTask = tasks[index];
+            };
+        });
+        if(editingTask !== null) {
+            this.setState({
+                isDisplayForm: true,
+                editingItem: editingTask
+            })
+        }
+    }
+
     render() {
         let {tasks, isDisplayForm} = this.state;
         let elmForm = isDisplayForm?<TaskForm 
                                         onCloseForm={this.onCloseForm} 
                                         onReceivedTask={this.onReceivedTask}
+                                        EditingTask={this.state.editingItem}
                                     />:"";
         return (
             <div className="container">
@@ -121,6 +162,7 @@ class App extends Component {
                                     tasks={tasks} 
                                     onUpdateStatus={this.updateStatus}
                                     ondeleteTaskItem={this.deleteTaskItem}
+                                    onEditTaskItem={this.EditTaskItem}
                                 />
                             </div>
                         </div>

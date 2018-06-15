@@ -4,6 +4,7 @@ class TaskForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             name: '',
             status: false
         }
@@ -31,6 +32,7 @@ class TaskForm extends Component {
             this.props.onReceivedTask(this.state);
             this.onClear();
         }
+        this.closeForm();
     }
 
     onClear = ()=>{
@@ -38,6 +40,34 @@ class TaskForm extends Component {
             name: '',
             status: false
         })
+        this.closeForm();
+    }
+
+    componentWillMount() {
+        if(this.props.EditingTask !== null) {
+            this.setState({
+                id: this.props.EditingTask.id,
+                name: this.props.EditingTask.name,
+                status: this.props.EditingTask.status
+            })
+        }
+    }
+    
+    componentWillReceiveProps(nextProp) {
+        //if has editingtask prop
+        if(nextProp.EditingTask !== null) {
+            this.setState({
+                id: nextProp.EditingTask.id,
+                name: nextProp.EditingTask.name,
+                status: nextProp.EditingTask.status
+            })
+        }else{ // if it === null
+            this.setState({
+                id: '',
+                name: '',
+                status: false
+            })
+        }
     }
 
     render() {
@@ -45,7 +75,7 @@ class TaskForm extends Component {
             <div className="panel panel-info">
                 <div className="panel-heading">
                     <h3 className="panel-title">
-                        Add Task
+                        {this.state.id !== ""?"Edit Task":"Add Task"}
                         <i 
                             className="far fa-times-circle text-right"
                             onClick={this.closeForm}
