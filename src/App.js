@@ -160,8 +160,12 @@ class App extends Component {
             })
         }
         if(searchKey) {
+            //search multi key. remember toString()
+            //remember task[key]. can not use (task.key) when key is a variable.
             tasks = tasks.filter((task, index)=>{
-                return task.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
+                return Object.keys(task).some((key, index)=>{
+                    return task[key].toString().toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
+                })
             })
         }
         let elmForm = isDisplayForm?<TaskForm 
