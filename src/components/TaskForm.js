@@ -19,11 +19,9 @@ class TaskForm extends Component {
         let ename = target.name;
         let evalue = (target.type === 'checkbox')?target.checked:target.value;
         if(ename === 'status') evalue = (evalue === 'true')?true:false;
-        if(target.type === 'checkbox' || evalue === true || evalue === false || evalue.trim().length) {
-            this.setState({
-                [ename]: evalue
-            })
-        }
+        this.setState({
+            [ename]: evalue
+        })
     }
 
     onHandleSubmit = (event)=>{

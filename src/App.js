@@ -14,7 +14,8 @@ class App extends Component {
             filter: {
                 filterName: '',
                 filterStatus: -1
-            }
+            },
+            searchKey: ''
         }
     }
 
@@ -137,8 +138,14 @@ class App extends Component {
         })
     }
 
+    Search = (keyword)=>{
+        this.setState({
+            searchKey: keyword
+        })
+    }
+
     render() {
-        let {tasks, isDisplayForm, filter} = this.state;
+        let {tasks, isDisplayForm, filter, searchKey} = this.state;
         if(filter){
             if(filter.filterName){
                 tasks = tasks.filter((task, index)=>{
@@ -150,6 +157,11 @@ class App extends Component {
                 if(parseInt(filter.filterStatus, 10) === -1) return task;
                 let filterStatus = parseInt(filter.filterStatus, 10) === 1?true:false;
                 return task.status === filterStatus;
+            })
+        }
+        if(searchKey) {
+            tasks = tasks.filter((task, index)=>{
+                return task.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
             })
         }
         let elmForm = isDisplayForm?<TaskForm 
@@ -180,7 +192,7 @@ class App extends Component {
                             </button>
                         </div>
                         {/* search and sort */}
-                        <Action />
+                        <Action onSearch={this.Search}/>
                         {/* list */}
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
