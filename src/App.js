@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import TaskForm from './components/TaskForm';
 import Action from './components/Action';
 import TaskList from './components/TaskList';
+// import _ from 'lodash';
+import {filter as myFilter} from'lodash';
 import './App.css';
 
 class App extends Component {
@@ -161,8 +163,16 @@ class App extends Component {
         let {tasks, isDisplayForm, filter, searchKey, sort} = this.state;
         if(filter){
             if(filter.filterName){
-                tasks = tasks.filter((task, index)=>{
-                    return task.name.toLowerCase().indexOf(filter.filterName.toLowerCase()) !== -1
+                // tasks = tasks.filter((task, index)=>{
+                //     return task.name.toLowerCase().indexOf(filter.filterName.toLowerCase()) !== -1
+                // })
+                //use lodash
+                // tasks = _.filter(tasks, task=>{
+                //     return task.name.toString().toLowerCase().indexOf(filter.filterName.toString().toLowerCase()) !== -1
+                // })
+                //custom Lodash
+                tasks = myFilter(tasks, task=>{
+                    return task.name.toString().toLowerCase().indexOf(filter.filterName.toString().toLowerCase()) !== -1
                 })
             }
             tasks = tasks.filter((task, index)=>{
