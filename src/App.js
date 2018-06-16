@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TaskForm from './components/TaskForm';
 import Action from './components/Action';
 import TaskList from './components/TaskList';
+import demo from './training/demo'
 // import _ from 'lodash';
 import {filter as myFilter} from'lodash';
 import './App.css';
