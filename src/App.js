@@ -15,7 +15,11 @@ class App extends Component {
                 filterName: '',
                 filterStatus: -1
             },
-            searchKey: ''
+            searchKey: '',
+            sort: {
+                by: 'name',
+                value: '1'
+            }
         }
     }
 
@@ -144,8 +148,17 @@ class App extends Component {
         })
     }
 
+    Sort = (sort)=>{
+        this.setState({
+            sort: {
+                by: sort.by,
+                value: sort.value
+            }
+        })
+    }
+
     render() {
-        let {tasks, isDisplayForm, filter, searchKey} = this.state;
+        let {tasks, isDisplayForm, filter, searchKey, sort} = this.state;
         if(filter){
             if(filter.filterName){
                 tasks = tasks.filter((task, index)=>{
@@ -167,6 +180,23 @@ class App extends Component {
                     return task[key].toString().toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
                 })
             })
+        }
+        if(sort) {
+            if(sort.by === 'name') {
+                let value = sort.value;
+                tasks = tasks.sort((task1, task2)=>{
+                    if(task1.name.toString().toLowerCase() < task2.name.toString().toLowerCase()) return -value
+                    else if (task1.name.toString().toLowerCase() > task2.name.toString().toLowerCase()) return value
+                    else return 0;
+                })
+            }else{
+                let value = sort.value;
+                tasks = tasks.sort((task1, task2)=>{
+                    if(task1.status.toString().toLowerCase() < task2.status.toString().toLowerCase()) return value
+                    else if (task1.status.toString().toLowerCase() > task2.status.toString().toLowerCase()) return -value
+                    else return 0;
+                })
+            }
         }
         let elmForm = isDisplayForm?<TaskForm 
                                         onCloseForm={this.onCloseForm} 
@@ -196,7 +226,7 @@ class App extends Component {
                             </button>
                         </div>
                         {/* search and sort */}
-                        <Action onSearch={this.Search}/>
+                        <Action onSort={this.Sort} onSearch={this.Search}/>
                         {/* list */}
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
