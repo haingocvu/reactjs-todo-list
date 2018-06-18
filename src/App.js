@@ -3,14 +3,13 @@ import TaskForm from './components/TaskForm';
 import Action from './components/Action';
 import TaskList from './components/TaskList';
 // import _ from 'lodash';
-import {filter as myFilter} from'lodash';
+// import {filter as myFilter} from'lodash';
 import './App.css';
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: [],
             isDisplayForm: false,
             editingItem: null,
             filter: {
@@ -25,23 +24,13 @@ class App extends Component {
         }
     }
 
-    componentWillMount() {
-        if(localStorage && localStorage.getItem("tasks")) {
-            this.setState({
-                tasks: JSON.parse(localStorage.getItem("tasks"))
-            })
-        }
-    }
-
-    randomString(length) {
-        //62
-        let src = "1234567890zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP";
-        let str = "";
-        for (let index = 0; index < length; index++) {
-            str += src.substr(Math.floor(Math.random()*src.length), 1);
-        }
-        return str;
-    }
+    // componentWillMount() {
+    //     if(localStorage && localStorage.getItem("tasks")) {
+    //         this.setState({
+    //             tasks: JSON.parse(localStorage.getItem("tasks"))
+    //         })
+    //     }
+    // }
 
     onToggleForm = ()=>{
         //when not edit
@@ -63,34 +52,34 @@ class App extends Component {
         })
     }
 
-    onReceivedTask = (data)=>{
-        //if editing task
-        if(data.id !== ''){
-            let {tasks} = this.state;
-            tasks.forEach((task, index) => {
-                if(task.id === data.id) {
-                   return tasks[index] = data;
-                }
-            });
-            this.setState({
-                tasks: tasks,
-                editingItem: null
-            })
-            localStorage.setItem("tasks", JSON.stringify(tasks));
-        }else{//when add new task
-            let task = {
-                id: this.randomString(10),
-                name: data.name,
-                status: data.status
-            };
-            let {tasks} = this.state;
-            tasks.push(task);
-            this.setState({
-                tasks: tasks
-            });
-            localStorage.setItem("tasks", JSON.stringify(tasks));
-        }
-    }
+    // onReceivedTask = (data)=>{
+    //     //if editing task
+    //     if(data.id !== ''){
+    //         let {tasks} = this.state;
+    //         tasks.forEach((task, index) => {
+    //             if(task.id === data.id) {
+    //                return tasks[index] = data;
+    //             }
+    //         });
+    //         this.setState({
+    //             tasks: tasks,
+    //             editingItem: null
+    //         })
+    //         localStorage.setItem("tasks", JSON.stringify(tasks));
+    //     }else{//when add new task
+    //         let task = {
+    //             id: this.randomString(10),
+    //             name: data.name,
+    //             status: data.status
+    //         };
+    //         let {tasks} = this.state;
+    //         tasks.push(task);
+    //         this.setState({
+    //             tasks: tasks
+    //         });
+    //         localStorage.setItem("tasks", JSON.stringify(tasks));
+    //     }
+    // }
 
     updateStatus = (id)=>{
         let {tasks} = this.state;
@@ -160,57 +149,56 @@ class App extends Component {
     }
 
     render() {
-        let {tasks, isDisplayForm, filter, searchKey, sort} = this.state;
-        if(filter){
-            if(filter.filterName){
-                // tasks = tasks.filter((task, index)=>{
-                //     return task.name.toLowerCase().indexOf(filter.filterName.toLowerCase()) !== -1
-                // })
-                //use lodash
-                // tasks = _.filter(tasks, task=>{
-                //     return task.name.toString().toLowerCase().indexOf(filter.filterName.toString().toLowerCase()) !== -1
-                // })
-                //custom Lodash
-                tasks = myFilter(tasks, task=>{
-                    return task.name.toString().toLowerCase().indexOf(filter.filterName.toString().toLowerCase()) !== -1
-                })
-            }
-            tasks = tasks.filter((task, index)=>{
-                //status -1 will take all
-                if(parseInt(filter.filterStatus, 10) === -1) return task;
-                let filterStatus = parseInt(filter.filterStatus, 10) === 1?true:false;
-                return task.status === filterStatus;
-            })
-        }
-        if(searchKey) {
-            //search multi key. remember toString()
-            //remember task[key]. can not use (task.key) when key is a variable.
-            tasks = tasks.filter((task, index)=>{
-                return Object.keys(task).some((key, index)=>{
-                    return task[key].toString().toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
-                })
-            })
-        }
-        if(sort) {
-            if(sort.by === 'name') {
-                let value = sort.value;
-                tasks = tasks.sort((task1, task2)=>{
-                    if(task1.name.toString().toLowerCase() < task2.name.toString().toLowerCase()) return -value
-                    else if (task1.name.toString().toLowerCase() > task2.name.toString().toLowerCase()) return value
-                    else return 0;
-                })
-            }else{
-                let value = sort.value;
-                tasks = tasks.sort((task1, task2)=>{
-                    if(task1.status.toString().toLowerCase() < task2.status.toString().toLowerCase()) return value
-                    else if (task1.status.toString().toLowerCase() > task2.status.toString().toLowerCase()) return -value
-                    else return 0;
-                })
-            }
-        }
+        let {isDisplayForm} = this.state;
+        // if(filter){
+        //     if(filter.filterName){
+        //         // tasks = tasks.filter((task, index)=>{
+        //         //     return task.name.toLowerCase().indexOf(filter.filterName.toLowerCase()) !== -1
+        //         // })
+        //         //use lodash
+        //         // tasks = _.filter(tasks, task=>{
+        //         //     return task.name.toString().toLowerCase().indexOf(filter.filterName.toString().toLowerCase()) !== -1
+        //         // })
+        //         //custom Lodash
+        //         tasks = myFilter(tasks, task=>{
+        //             return task.name.toString().toLowerCase().indexOf(filter.filterName.toString().toLowerCase()) !== -1
+        //         })
+        //     }
+        //     tasks = tasks.filter((task, index)=>{
+        //         //status -1 will take all
+        //         if(parseInt(filter.filterStatus, 10) === -1) return task;
+        //         let filterStatus = parseInt(filter.filterStatus, 10) === 1?true:false;
+        //         return task.status === filterStatus;
+        //     })
+        // }
+        // if(searchKey) {
+        //     //search multi key. remember toString()
+        //     //remember task[key]. can not use (task.key) when key is a variable.
+        //     tasks = tasks.filter((task, index)=>{
+        //         return Object.keys(task).some((key, index)=>{
+        //             return task[key].toString().toLowerCase().indexOf(searchKey.toLowerCase()) !== -1;
+        //         })
+        //     })
+        // }
+        // if(sort) {
+        //     if(sort.by === 'name') {
+        //         let value = sort.value;
+        //         tasks = tasks.sort((task1, task2)=>{
+        //             if(task1.name.toString().toLowerCase() < task2.name.toString().toLowerCase()) return -value
+        //             else if (task1.name.toString().toLowerCase() > task2.name.toString().toLowerCase()) return value
+        //             else return 0;
+        //         })
+        //     }else{
+        //         let value = sort.value;
+        //         tasks = tasks.sort((task1, task2)=>{
+        //             if(task1.status.toString().toLowerCase() < task2.status.toString().toLowerCase()) return value
+        //             else if (task1.status.toString().toLowerCase() > task2.status.toString().toLowerCase()) return -value
+        //             else return 0;
+        //         })
+        //     }
+        // }
         let elmForm = isDisplayForm?<TaskForm 
                                         onCloseForm={this.onCloseForm} 
-                                        onReceivedTask={this.onReceivedTask}
                                         EditingTask={this.state.editingItem}
                                     />:"";
         return (

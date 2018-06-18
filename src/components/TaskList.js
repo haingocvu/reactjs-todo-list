@@ -24,7 +24,6 @@ class TaskList extends Component {
 
     render() {
         let {tasks} = this.props;
-        console.log(tasks);
         let ElementTasks = tasks.map((task, index)=>{
             return <TaskItem 
                         key={task.id} 
