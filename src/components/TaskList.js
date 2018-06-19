@@ -6,8 +6,8 @@ class TaskList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        filterName: '',
-        filterStatus: -1
+            filterName: '',
+            filterStatus: -1
         }
     }
     
@@ -29,7 +29,6 @@ class TaskList extends Component {
                         key={task.id} 
                         index={index} 
                         task={task} 
-                        onEdit={this.props.onEditTaskItem}
                     />
         })
         return (

@@ -29,16 +29,21 @@ class TaskForm extends Component {
     onHandleSubmit = (event)=>{
         event.preventDefault();
         if(this.state.name.trim().length && (this.state.status === true || this.state.status === false)){
-            this.props.onAddTask(this.state)
+            this.props.onSaveTask(this.state)
             this.onClear();
         }
     }
 
     onClear = ()=>{
-        this.setState({
-            name: '',
-            status: false
-        })
+        if(this.props.EditingTask) {
+            //set editingtask = null
+            this.props.onClearEditingTask()
+        } else {
+            this.setState({
+                name: '',
+                status: false
+            })
+        }
         this.closeForm();
     }
 
@@ -70,6 +75,7 @@ class TaskForm extends Component {
     }
 
     render() {
+        if(!this.props.isDisplayForm) return '';
         return (
             <div className="panel panel-info">
                 <div className="panel-heading">
@@ -126,17 +132,21 @@ class TaskForm extends Component {
 
 const mapStatesToProps = state => {
     return {
-
+        isDisplayForm: state.isDisplayForm,
+        EditingTask: state.editingTask
     }
 }
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        onAddTask: task => {
-            dispatch(actions.addTask(task))
+        onSaveTask: task => {
+            dispatch(actions.saveTask(task))
         },
         onCloseForm: () => {
             dispatch(actions.closeForm())
+        },
+        onClearEditingTask: () => {
+            dispatch(actions.clearEditingTask())
         }
     }
 }

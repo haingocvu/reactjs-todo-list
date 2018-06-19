@@ -5,9 +5,9 @@ const listALl = ()=>{
     }
 }
 
-const addTask = task => {
+const saveTask = task => {
     return {
-        type: actionTypes.ADD_TASK,
+        type: actionTypes.SAVE_TASK,
         task
     }
 }
@@ -44,4 +44,17 @@ const deleteTaskItem = id => {
     }
 }
 
-export {listALl, addTask, toggleForm, closeForm, openForm, updateStatusTask, deleteTaskItem};
+const editTask = task => {
+    return {
+        type: actionTypes.EDIT_TASK,
+        task
+    }
+}
+
+const clearEditingTask = () => {
+    return {
+        type: actionTypes.CLEAR_EDITING_TASK
+    }
+}
+
+export {listALl, saveTask, toggleForm, closeForm, openForm, updateStatusTask, deleteTaskItem, editTask, clearEditingTask};
