@@ -57,4 +57,12 @@ const clearEditingTask = () => {
     }
 }
 
-export {listALl, saveTask, toggleForm, closeForm, openForm, updateStatusTask, deleteTaskItem, editTask, clearEditingTask};
+const filterTasks = filter => {
+    return {
+        type: actionTypes.FILTER_TASKS,
+        filter
+    }
+}
+
+export {listALl, saveTask, toggleForm, closeForm, openForm, 
+    updateStatusTask, deleteTaskItem, editTask, clearEditingTask, filterTasks};

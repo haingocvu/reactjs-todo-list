@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TaskItem from './TaskItem';
 import { connect } from "react-redux";
+import * as actions from "./../actions/index";
+import { filter as _filter } from "lodash";
 
 class TaskList extends Component {
     constructor(props) {
@@ -18,12 +20,32 @@ class TaskList extends Component {
         this.setState({
             [name]: value
         }, ()=>{
-            this.props.onFilter(this.state.filterName, this.state.filterStatus)
+            this.props.onFilterTask(
+                {
+                    filterName: this.state.filterName, 
+                    filterStatus: this.state.filterStatus
+                }
+            )
         })
     }
 
     render() {
-        let {tasks} = this.props;
+        let {tasks, filterTask} = this.props;
+        //filter
+        let filterName = filterTask.filterName.toString().trim().toLowerCase();
+        let filterStatus = parseInt(filterTask.filterStatus.toString(), 10);
+        if(filterStatus === 1) filterStatus = true;
+            else if(filterStatus === 0) filterStatus = false;
+        tasks = _filter(tasks, task => {
+            if(filterStatus === -1){
+                return task.name.toString().toLowerCase().indexOf(filterName) !== -1
+            } else {
+                return (task.name.toString().toLowerCase().indexOf(filterName) !== -1) &&
+                    (task.status === filterStatus);
+            }
+        })
+        //end filter
+
         let ElementTasks = tasks.map((task, index)=>{
             return <TaskItem 
                         key={task.id} 
@@ -76,8 +98,17 @@ class TaskList extends Component {
 
 const mapStatesToProps = state=>{
     return {
-        tasks: state.tasks
+        tasks: state.tasks,
+        filterTask: state.filterTask
     }
 }
 
-export default connect(mapStatesToProps, null)(TaskList);
+const mapDispatchToProp = (dispatch, prop) => {
+    return {
+        onFilterTask: filter => {
+            dispatch(actions.filterTasks(filter))
+        }
+    }
+}
+
+export default connect(mapStatesToProps, mapDispatchToProp)(TaskList);

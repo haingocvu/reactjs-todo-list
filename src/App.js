@@ -10,25 +10,12 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: {
-                filterName: '',
-                filterStatus: -1
-            },
             searchKey: '',
             sort: {
                 by: 'name',
                 value: '1'
             }
         }
-    }
-
-    Filter = (filterName, filterStatus)=>{
-        this.setState({
-            filter: {
-                filterName: filterName,
-                filterStatus: filterStatus
-            }
-        })
     }
 
     Search = (keyword)=>{
@@ -86,9 +73,7 @@ class App extends Component {
                         {/* list */}
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <TaskList 
-                                    onFilter={this.Filter}
-                                />
+                                <TaskList />
                             </div>
                         </div>
                     </div>
