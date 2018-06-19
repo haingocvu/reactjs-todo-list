@@ -12,4 +12,22 @@ const addTask = task => {
     }
 }
 
-export {listALl, addTask};
+const toggleForm = () => {
+    return {
+        type: actionTypes.TOGGLE_FORM
+    }
+}
+
+const closeForm = () => {
+    return {
+        type: actionTypes.CLOSE_FORM
+    }
+}
+
+const openForm = () => {
+    return {
+        type: actionTypes.OPEN_FORM
+    }
+}
+
+export {listALl, addTask, toggleForm, closeForm, openForm};
