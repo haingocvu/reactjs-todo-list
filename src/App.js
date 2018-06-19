@@ -23,19 +23,6 @@ class App extends Component {
         }
     }
 
-    updateStatus = (id)=>{
-        let {tasks} = this.state;
-        tasks.forEach(task => {
-            if(task.id === id) {
-                return task.status = !task.status
-            }
-        });
-        this.setState({
-            tasks: tasks
-        });
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-    }
-
     deleteTaskItem = (id)=>{
         let tasks = this.state.tasks;
         tasks.forEach((task, index) => {
@@ -127,7 +114,6 @@ class App extends Component {
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <TaskList 
-                                    onUpdateStatus={this.updateStatus}
                                     ondeleteTaskItem={this.deleteTaskItem}
                                     onEditTaskItem={this.EditTaskItem}
                                     onFilter={this.Filter}

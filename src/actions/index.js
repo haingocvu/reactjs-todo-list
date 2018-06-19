@@ -30,4 +30,11 @@ const openForm = () => {
     }
 }
 
-export {listALl, addTask, toggleForm, closeForm, openForm};
+const updateStatusTask = id => {
+    return {
+        type: actionTypes.UPDATE_STATUS_TASK,
+        id
+    }
+}
+
+export {listALl, addTask, toggleForm, closeForm, openForm, updateStatusTask};

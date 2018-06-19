@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+import * as actions from "./../actions/index";
 
 class TaskItem extends Component {
     onUpdateMyStatus = ()=>{
-        this.props.onUpdateItemStatus(this.props.task.id)
+        this.props.onUpdateStatusTask(this.props.task.id)
     }
 
     deleteItem = ()=>{
@@ -50,4 +52,18 @@ class TaskItem extends Component {
     }
 }
 
-export default TaskItem;
+const mapStatesToProps = state => {
+    return {
+
+    }
+}
+
+const mapDispatchToProp = (dispatch, prop) => {
+    return {
+        onUpdateStatusTask: id => {
+            dispatch(actions.updateStatusTask(id))
+        }
+    }
+}
+
+export default connect(mapStatesToProps, mapDispatchToProp)(TaskItem);

@@ -1,5 +1,6 @@
 import * as actionTypes from "./../constants/index";
 import {randomString} from "./../ultils/random";
+import { findIndex } from "lodash";
 
 let data = JSON.parse(localStorage.getItem('tasks'));
 let initialState = data?data:[];
@@ -16,6 +17,19 @@ let myReducer = (state = initialState, action)=>{
             state.push(task);
             localStorage.setItem('tasks', JSON.stringify(state));
             //khi thay doi state. phai tra ve 1 state moi bang cu phap es6. giong ham map. no se tra ve 1 array moi tu array cu.
+            return [...state];
+        case actionTypes.UPDATE_STATUS_TASK:
+            let taskIndex = findIndex(state, task => {
+                return task.id === action.id
+            });
+            if(taskIndex || taskIndex === 0) {
+                let cloneTask = {
+                    ...state[taskIndex],
+                    status: !state[taskIndex].status
+                };
+                state.splice(taskIndex, 1, cloneTask);
+                localStorage.setItem('tasks', JSON.stringify(state));
+            }
             return [...state];
         default:
             return state;
