@@ -37,4 +37,11 @@ const updateStatusTask = id => {
     }
 }
 
-export {listALl, addTask, toggleForm, closeForm, openForm, updateStatusTask};
+const deleteTaskItem = id => {
+    return {
+        type: actionTypes.DELETE_TASK_ITEM,
+        id// id: id
+    }
+}
+
+export {listALl, addTask, toggleForm, closeForm, openForm, updateStatusTask, deleteTaskItem};

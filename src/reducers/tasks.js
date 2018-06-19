@@ -5,6 +5,7 @@ import { findIndex } from "lodash";
 let data = JSON.parse(localStorage.getItem('tasks'));
 let initialState = data?data:[];
 let myReducer = (state = initialState, action)=>{
+    let taskIndex = -1;
     switch (action.type) {
         case actionTypes.LIST_ALL_TASK:
             return state;
@@ -19,7 +20,7 @@ let myReducer = (state = initialState, action)=>{
             //khi thay doi state. phai tra ve 1 state moi bang cu phap es6. giong ham map. no se tra ve 1 array moi tu array cu.
             return [...state];
         case actionTypes.UPDATE_STATUS_TASK:
-            let taskIndex = findIndex(state, task => {
+            taskIndex = findIndex(state, task => {
                 return task.id === action.id
             });
             if(taskIndex || taskIndex === 0) {
@@ -28,6 +29,15 @@ let myReducer = (state = initialState, action)=>{
                     status: !state[taskIndex].status
                 };
                 state.splice(taskIndex, 1, cloneTask);
+                localStorage.setItem('tasks', JSON.stringify(state));
+            }
+            return [...state];
+        case actionTypes.DELETE_TASK_ITEM:
+            taskIndex = findIndex(state, task => {
+                return task.id === action.id
+            });
+            if(taskIndex || taskIndex === 0) {
+                state.splice(taskIndex, 1);
                 localStorage.setItem('tasks', JSON.stringify(state));
             }
             return [...state];

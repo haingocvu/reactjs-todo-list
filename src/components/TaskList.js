@@ -29,8 +29,6 @@ class TaskList extends Component {
                         key={task.id} 
                         index={index} 
                         task={task} 
-                        onUpdateItemStatus={this.props.onUpdateStatus}
-                        onDeleteItem={this.props.ondeleteTaskItem}
                         onEdit={this.props.onEditTaskItem}
                     />
         })
