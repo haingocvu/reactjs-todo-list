@@ -9,7 +9,7 @@ class Action extends Component {
                 {/* search */}
                 <Search />
                 {/* sort */}
-                <Sort onSort={this.props.onSort}/>
+                <Sort />
             </div>
         );
     }

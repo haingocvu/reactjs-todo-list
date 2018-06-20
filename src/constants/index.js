@@ -9,3 +9,4 @@ export const EDIT_TASK = 'EDIT_TASK';
 export const CLEAR_EDITING_TASK = 'CLEAR_EDITING_TASK';
 export const FILTER_TASKS = 'FILTER_TASKS';
 export const SEARCH_TASK = 'SEARCH_TASK';
+export const SORT_TASK = 'SORT_TASK';

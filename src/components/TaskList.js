@@ -13,13 +13,13 @@ class TaskList extends Component {
         }
     }
     
-    handleChange = (event)=>{
+    handleChange =(event) => {
         let target = event.target;
         let name = target.name;
         let value = target.value;
         this.setState({
             [name]: value
-        }, ()=>{
+        }, () => {
             this.props.onFilterTask(
                 {
                     filterName: this.state.filterName, 
@@ -30,7 +30,7 @@ class TaskList extends Component {
     }
 
     render() {
-        let {tasks, filterTask, keyword} = this.props;
+        let {tasks, filterTask, keyword, sortTaskBy} = this.props;
         //filter
         let filterName = filterTask.filterName.toString().trim().toLowerCase();
         let filterStatus = parseInt(filterTask.filterStatus.toString(), 10);
@@ -54,6 +54,30 @@ class TaskList extends Component {
                     return task[key].toString().toLowerCase().indexOf(keyword.toString().toLowerCase()) !== -1
                 })
             })
+        }
+
+        //sort
+        if(sortTaskBy) {
+            //sort by name
+            if(sortTaskBy.sortBy === 'name') {
+                let sortValue = sortTaskBy.sortValue;
+                tasks = tasks.sort((task1, task2) => {
+                    let task1Name = task1.name.toString().toLowerCase();
+                    let task2Name = task2.name.toString().toLowerCase();
+                    return task1Name > task2Name?
+                        sortValue : task1Name < task2Name?
+                        -sortValue: 0;
+                })
+            }else {//sort by status
+                let sortValue = sortTaskBy.sortValue;
+                tasks = tasks.sort((task1, task2) => {
+                    let task1Status = task1.status.toString().toLowerCase();
+                    let task2Status = task2.status.toString().toLowerCase();
+                    return task1Status > task2Status?
+                        -sortValue : task1Status < task2Status?
+                        sortValue: 0;
+                })
+            }
         }
 
         let ElementTasks = tasks.map((task, index)=>{
@@ -110,7 +134,8 @@ const mapStatesToProps = state=>{
     return {
         tasks: state.tasks,
         filterTask: state.filterTask,
-        keyword: state.searchTask
+        keyword: state.searchTask,
+        sortTaskBy: state.sortTask
     }
 }
 

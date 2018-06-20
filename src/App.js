@@ -10,21 +10,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            searchKey: '',
-            sort: {
-                by: 'name',
-                value: '1'
-            }
         }
-    }
-
-    Sort = (sort)=>{
-        this.setState({
-            sort: {
-                by: sort.by,
-                value: sort.value
-            }
-        })
     }
 
     onToggleForm = () => {
@@ -48,8 +34,7 @@ class App extends Component {
                 <div className="row">
                     <div className={isDisplayForm?"col-xs-4 col-sm-4 col-md-4 col-lg-4":""}>
                         {/* add task */}
-                        <TaskForm 
-                        />
+                        <TaskForm />
                     </div>
                     <div className={isDisplayForm?"col-xs-8 col-sm-8 col-md-8 col-lg-8":"col-xs-12 col-sm-12 col-md-12 col-lg-12"}>
                         {/* add task */}
@@ -63,7 +48,7 @@ class App extends Component {
                             </button>
                         </div>
                         {/* search and sort */}
-                        <Action onSort={this.Sort} />
+                        <Action />
                         {/* list */}
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">

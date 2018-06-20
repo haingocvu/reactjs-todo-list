@@ -71,5 +71,13 @@ const searchTask = keyword => {
     }
 }
 
+const sortTask = sort => {
+    return {
+        type: actionTypes.SORT_TASK,
+        sort
+    }
+}
+
 export {listALl, saveTask, toggleForm, closeForm, openForm, 
-    updateStatusTask, deleteTaskItem, editTask, clearEditingTask, filterTasks, searchTask};
+    updateStatusTask, deleteTaskItem, editTask, clearEditingTask, 
+    filterTasks, searchTask, sortTask};
