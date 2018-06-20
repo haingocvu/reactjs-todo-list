@@ -64,5 +64,12 @@ const filterTasks = filter => {
     }
 }
 
+const searchTask = keyword => {
+    return {
+        type: actionTypes.SEARCH_TASK,
+        keyword
+    }
+}
+
 export {listALl, saveTask, toggleForm, closeForm, openForm, 
-    updateStatusTask, deleteTaskItem, editTask, clearEditingTask, filterTasks};
+    updateStatusTask, deleteTaskItem, editTask, clearEditingTask, filterTasks, searchTask};

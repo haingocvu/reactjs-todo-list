@@ -18,12 +18,6 @@ class App extends Component {
         }
     }
 
-    Search = (keyword)=>{
-        this.setState({
-            searchKey: keyword
-        })
-    }
-
     Sort = (sort)=>{
         this.setState({
             sort: {
@@ -69,7 +63,7 @@ class App extends Component {
                             </button>
                         </div>
                         {/* search and sort */}
-                        <Action onSort={this.Sort} onSearch={this.Search}/>
+                        <Action onSort={this.Sort} />
                         {/* list */}
                         <div className="row mt-15">
                             <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">

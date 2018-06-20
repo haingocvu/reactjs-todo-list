@@ -30,7 +30,7 @@ class TaskList extends Component {
     }
 
     render() {
-        let {tasks, filterTask} = this.props;
+        let {tasks, filterTask, keyword} = this.props;
         //filter
         let filterName = filterTask.filterName.toString().trim().toLowerCase();
         let filterStatus = parseInt(filterTask.filterStatus.toString(), 10);
@@ -45,6 +45,16 @@ class TaskList extends Component {
             }
         })
         //end filter
+
+        //search multi key. remember toString()
+        //remember task[key]. can not use (task.key) when key is a variable.
+        if(keyword) {
+            tasks = _filter(tasks, task => {
+                return Object.keys(task).some((key, index) => {
+                    return task[key].toString().toLowerCase().indexOf(keyword.toString().toLowerCase()) !== -1
+                })
+            })
+        }
 
         let ElementTasks = tasks.map((task, index)=>{
             return <TaskItem 
@@ -99,7 +109,8 @@ class TaskList extends Component {
 const mapStatesToProps = state=>{
     return {
         tasks: state.tasks,
-        filterTask: state.filterTask
+        filterTask: state.filterTask,
+        keyword: state.searchTask
     }
 }
 

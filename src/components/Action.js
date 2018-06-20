@@ -7,7 +7,7 @@ class Action extends Component {
         return (
             <div className="row mt-15">
                 {/* search */}
-                <Search onSearch={this.props.onSearch}/>
+                <Search />
                 {/* sort */}
                 <Sort onSort={this.props.onSort}/>
             </div>
